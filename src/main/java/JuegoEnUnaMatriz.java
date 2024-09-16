@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
@@ -10,6 +11,14 @@ public class JuegoEnUnaMatriz {
         Object[][] enemigosData = new Object[4][4];
         inicializarJuego(mapa, jugadorData, enemigosData);
         mostrarMapa(mapa);
+    }
+    public static int seleccionUsuario(){
+        try{
+            int seleccion = obtenerEntero();
+            return seleccion;
+        } catch(InputMismatchException e){
+            return 0;
+        }
     }
 
     public static void inicializarJuego(String[][] mapa, Object[] jugadorData, Object[][] enemigosData){
@@ -44,8 +53,8 @@ public class JuegoEnUnaMatriz {
             } else if (evento == "mover") {
                 moverJugador(mapa, posicionJugador, letra);
             } else if (evento == "enemigo") {
-                //Funcion para entrar en combate con el enemigo en cuestion
                 moverJugador(mapa, posicionJugador, letra);
+                //Funcion para entrar en combate con el enemigo en cuestion
             } else if (evento == "cofre") {
                 String resultadoEvento = eventoCofre(jugadorData);
                 if (resultadoEvento == "muerte"){
@@ -61,6 +70,106 @@ public class JuegoEnUnaMatriz {
             posicionJugador = coordenadasActualesJugador(mapa);
 
         }
+    }
+
+    public static void mostrarPantallaCombate(String nombreEnemigo){
+        System.out.println("                                      "+nombreEnemigo);
+        System.out.println("Tu:");
+        System.out.println(" 1) Atacar");
+        System.out.println(" 2) Huir");
+    }
+
+    public static String entrarEnCombate(Object[] enemigo, Object[] jugadorData){
+        boolean enCombate = true;
+        String nombreEnemigo = (String)enemigo[0];
+        int ataqueEnemigo = (int)enemigo[1];
+        int saludEnemigo = (int)enemigo[2];
+        int saludJugador = (int)jugadorData[1];
+        int ataqueJugador = (int)jugadorData[2];
+        String resultadoAccionMenu = "";
+        while (enCombate){
+            mostrarPantallaCombate(nombreEnemigo);
+            resultadoAccionMenu = accionesMenuCombate();
+            if (resultadoAccionMenu == "restarVidaEnemigo"){
+                saludEnemigo -= ataqueJugador;
+            } else if (resultadoAccionMenu == "restarVidaJugador") {
+                saludJugador -= ataqueEnemigo;
+            } else if (resultadoAccionMenu == "finCombate") {
+                enCombate = false;
+            } else if (resultadoAccionMenu == "opcionInvalida") {
+                System.out.println("La opcion seleccionada no existe");
+            }
+
+            if (saludEnemigo<=0){
+                System.out.println("El enemigo se a quedado sin puntos de vida!");
+                enCombate = false;
+            } else if (saludJugador<=0) {
+                System.out.println("Te haz quedado sin puntos de vida...");
+                return "muerte";
+            }
+        }
+        return "victoria";
+    }
+
+    public static String accionesMenuCombate(){
+        String accionEnemigo = obtenerAccionEnemigo();
+        switch (seleccionUsuario()){
+
+            case 1:
+                if (accionEnemigo == "atacar"){
+                    if (boleanoAleatorio() && boleanoAleatorio()){
+                        System.out.println("Tu enemigo y tu atacan a la vez...\nEl a acertado el golpe!");
+                        return "restarVidaJugador";
+                    } else {
+                        System.out.println("Tu enemigo y tu atacan a la vez...\nHaz Acertado el golpe!");
+                        return "restarVidaEnemigo";
+                    }
+                }else if (accionEnemigo == "huir") {
+                    System.out.println("El enemigo a huido cuando haz querido blandir tu espada...");
+                    return "finCombate";
+                }
+
+            case 2:
+                if (accionEnemigo == "atacar") {
+                    if (boleanoAleatorio()) {
+                        System.out.println("Haz podido huir del encuentro, eres muy veloz");
+                        return "finCombate";
+                    } else if (boleanoAleatorio()&& boleanoAleatorio()) {
+                        System.out.println("No pudiste huir sin embargo tu intento de huida evito que recibieras el golpe del enemigo");
+                        return "";
+                    } else {
+                        System.out.println("El enemigo es persistente y no te da la oportunidad de huir, te ataca");
+                        return "restarVidaJugador";
+                    }
+                }
+                System.out.println("Tu y tu enemigo han preferido la paz, ambos huyen del lugar");
+                return "finCombate";
+            default:
+                return "opcionInvalida";
+        }
+    }
+
+    public static String obtenerAccionEnemigo(){
+        String accionEnemigo = "";
+        if (numeroAleatorio(0,100) == 50){
+            accionEnemigo = "huir";
+        } else {
+            accionEnemigo = "atacar";
+        }
+        return accionEnemigo;
+    }
+
+    public static Object[] identificarEnemigo(String[][] mapa,Object[][] enemigosData, Object[] jugadorData){
+        int[] coordenadasEnemigo = coordenadasActualesJugador(mapa);
+        for (int i=0; i<=enemigosData.length; i++){
+            if (coordenadasEnemigo == enemigosData[i][1]){
+                String nombreEnemigo = (String) enemigosData[i][0];
+                int ataqueEnemigo = (int) enemigosData[i][2];
+                int saludEnemigo = (int) enemigosData[i][3];
+                return new Object[]{nombreEnemigo, ataqueEnemigo, saludEnemigo};
+            }
+        }
+        return null;
     }
 
     public static String eventoCofre(Object[] jugadorData){
@@ -288,6 +397,11 @@ public class JuegoEnUnaMatriz {
     public static boolean boleanoAleatorio(){
         Random random = new Random();
         return random.nextBoolean();
+    }
+
+    public static int obtenerEntero(){
+        Scanner sc = new Scanner(System.in);
+        return sc.nextInt();
     }
 
     public static String obtenerLetra(){
