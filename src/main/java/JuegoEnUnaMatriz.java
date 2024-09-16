@@ -1,4 +1,5 @@
 import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 
 public class JuegoEnUnaMatriz {
@@ -15,14 +16,88 @@ public class JuegoEnUnaMatriz {
         int[] posicionJugador = new int[2];
         posicionJugador[0] = 1;
         posicionJugador[1] = 1;
-        while (true){
-            actualizarJugadorData(jugadorData, posicionJugador, 100, 15);
+        int saludInicial = 100;
+        int ataqueInicial = 15;
+        jugadorData[0] = posicionJugador;
+        jugadorData[1] = saludInicial;
+        jugadorData[2] = ataqueInicial;
+    }
+
+    public static void jugar (String[][] mapa, Object[] jugadorData){
+        boolean vivo = true;
+        int[] posicionJugador = (int[])jugadorData[0];
+        int saludActual = (int) jugadorData[1];
+        int ataqueActual = (int) jugadorData[2];
+        while (vivo){
+            actualizarJugadorData(jugadorData, posicionJugador, saludActual, ataqueActual);
             mostrarMapa(mapa);
             System.out.print("Su direccion: ");
             String letra = obtenerLetra();
-            mapa = moverJugador(mapa, (int[])jugadorData[0], letra);
+            String evento = verificarEventoDelMapa(mapa, posicionJugador, letra);
+            if (evento == "noMover"){
+                moverJugador(mapa, posicionJugador, "noMover");
+            } else if (evento == "mover") {
+                moverJugador(mapa, posicionJugador, letra);
+            } else if (evento == "enemigo") {
+                //Funcion para entrar en combate con el enemigo en cuestion
+                moverJugador(mapa, posicionJugador, letra);
+            } else if (evento == "cofre") {
+                //Funcion para entrar en el evento de cofre
+                moverJugador(mapa, posicionJugador, letra);
+            }
             posicionJugador = coordenadasActualesJugador(mapa);
+
         }
+    }
+
+    public static String verificarEventoDelMapa(String[][] mapa, int[] posicionJugador, String letraDireccion){
+        //                 w - Arriba
+        // a - Izquierda | s - Abajo  | d - Derecha
+        int fila = posicionJugador[0];
+        int columna = posicionJugador[1];
+
+        if (Objects.equals(letraDireccion, "w")){
+            if (mapa[fila-1][columna] == " # "){
+                return "noMover";
+            } else if (mapa[fila-1][columna] == " C ") {
+                return "cofre";
+            } else if (mapa[fila-1][columna] == " E ") {
+                return "enemigo";
+            } else {
+                return "mover";
+            }
+        } else if (Objects.equals(letraDireccion, "s")){
+            if (mapa[fila+1][columna] == " # "){
+                return "noMover";
+            } else if (mapa[fila+1][columna] == " C ") {
+                return "cofre";
+            } else if (mapa[fila+1][columna] == " E ") {
+                return "enemigo";
+            } else {
+                return "mover";
+            }
+        } else if (Objects.equals(letraDireccion, "d")){
+            if (mapa[fila][columna+1] == " # "){
+                return "noMover";
+            } else if (mapa[fila][columna+1] == " C ") {
+                return "cofre";
+            } else if (mapa[fila][columna+1] == " E ") {
+                return "enemigo";
+            } else {
+                return "mover";
+            }
+        } else if (Objects.equals(letraDireccion, "a")){
+            if (mapa[fila][columna-1] == " # "){
+                return "noMover";
+            } else if (mapa[fila][columna-1] == " C ") {
+                return "cofre";
+            } else if (mapa[fila][columna-1] == " E ") {
+                return "enemigo";
+            } else {
+                return "mover";
+            }
+        }
+        return "pasar";
     }
 
     public static void mostrarMapa(String[][] mapa){
@@ -58,8 +133,6 @@ public class JuegoEnUnaMatriz {
         } else if (Objects.equals(letraDireccion, "a")){
             mapa[fila][columna] = " . ";
             mapa[fila][columna - 1] = " P ";
-        } else {
-            System.out.println("error");
         }
         return mapa;
     }
@@ -107,6 +180,16 @@ public class JuegoEnUnaMatriz {
             }
         }
         return mapa;
+    }
+
+    public static int numeroAleatorio (int numeroMenor, int numeroMayor){
+        Random random = new Random();
+        return random.nextInt(numeroMenor, numeroMayor);
+    }
+
+    public static boolean boleanoAleatorio(){
+        Random random = new Random();
+        return random.nextBoolean();
     }
 
     public static String obtenerLetra(){
