@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5f3c849-87cb-4dc5-be21-e744278fc129" name="Changes" comment="Evidencias">
+    <list default="true" id="c5f3c849-87cb-4dc5-be21-e744278fc129" name="Changes" comment="Funcion para verificar el evento al moverse, separada funcion para inicializar el juego y jugar">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/JuegoEnUnaMatriz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JuegoEnUnaMatriz.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +93,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1726507207940</updated>
-      <workItem from="1726507209126" duration="5477000" />
+      <workItem from="1726507209126" duration="7699000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -134,7 +135,15 @@
       <option name="project" value="LOCAL" />
       <updated>1726510937302</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Funcion para verificar el evento al moverse, separada funcion para inicializar el juego y jugar">
+      <option name="closed" value="true" />
+      <created>1726513492336</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1726513492336</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -145,7 +154,8 @@
     <MESSAGE value="Clase creada y funcion para rellenar el mapa con los limites generada y un breve testeo" />
     <MESSAGE value="Implementado movimiento al jugador, testeado" />
     <MESSAGE value="Evidencias" />
-    <option name="LAST_COMMIT_MESSAGE" value="Evidencias" />
+    <MESSAGE value="Funcion para verificar el evento al moverse, separada funcion para inicializar el juego y jugar" />
+    <option name="LAST_COMMIT_MESSAGE" value="Funcion para verificar el evento al moverse, separada funcion para inicializar el juego y jugar" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

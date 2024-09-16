@@ -8,11 +8,14 @@ public class JuegoEnUnaMatriz {
         String[][] mapa = new String[10][10];
         Object[] jugadorData = new Object[3];
         inicializarJuego(mapa, jugadorData);
+        mostrarMapa(mapa);
     }
 
     public static void inicializarJuego(String[][] mapa, Object[] jugadorData){
         generarLimitesMapa(mapa);
         ponerJugadorYFin(mapa);
+        ponerObstaculos(mapa);
+        ponerCofres(mapa);
         int[] posicionJugador = new int[2];
         posicionJugador[0] = 1;
         posicionJugador[1] = 1;
@@ -160,6 +163,30 @@ public class JuegoEnUnaMatriz {
     public static String[][] ponerJugadorYFin(String[][] mapa){
         mapa[1][1] = " P ";
         mapa[8][8] = " X ";
+        return mapa;
+    }
+
+    public static String[][] ponerObstaculos(String[][] mapa){
+        for (int i = 1; i < mapa.length - 1; i++){
+            for (int j = 1; j < mapa[i].length - 1; j++){
+                if (mapa[i][j] == " . " && numeroAleatorio(1,10) == 1){
+                    mapa[i][j] = " # ";
+                }
+            }
+        }
+        return mapa;
+    }
+
+    public static String[][] ponerCofres(String[][] mapa){
+        int contadorCofres = 1;
+        for (int i = 1; i < mapa.length - 1; i++){
+            for (int j = 1; j < mapa[i].length - 1; j++){
+                if (mapa[i][j] == " . " &&  contadorCofres <= 4 &&numeroAleatorio(1,10) == 5){
+                    mapa[i][j] = " C ";
+                    contadorCofres++;
+                }
+            }
+        }
         return mapa;
     }
 
