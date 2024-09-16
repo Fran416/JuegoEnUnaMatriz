@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5f3c849-87cb-4dc5-be21-e744278fc129" name="Changes" comment="Funcion para verificar el evento al moverse, separada funcion para inicializar el juego y jugar">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="c5f3c849-87cb-4dc5-be21-e744278fc129" name="Changes" comment="Evidencias">
       <change beforePath="$PROJECT_DIR$/src/main/java/JuegoEnUnaMatriz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JuegoEnUnaMatriz.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -93,7 +92,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1726507207940</updated>
-      <workItem from="1726507209126" duration="7699000" />
+      <workItem from="1726507209126" duration="8465000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -143,7 +142,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726513492336</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Funcion ponerCofres agregada y testeada">
+      <option name="closed" value="true" />
+      <created>1726515108910</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1726515108910</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Evidencias">
+      <option name="closed" value="true" />
+      <created>1726515133749</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1726515133749</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -153,9 +168,10 @@
     <MESSAGE value="Initial Commit" />
     <MESSAGE value="Clase creada y funcion para rellenar el mapa con los limites generada y un breve testeo" />
     <MESSAGE value="Implementado movimiento al jugador, testeado" />
-    <MESSAGE value="Evidencias" />
     <MESSAGE value="Funcion para verificar el evento al moverse, separada funcion para inicializar el juego y jugar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Funcion para verificar el evento al moverse, separada funcion para inicializar el juego y jugar" />
+    <MESSAGE value="Funcion ponerCofres agregada y testeada" />
+    <MESSAGE value="Evidencias" />
+    <option name="LAST_COMMIT_MESSAGE" value="Evidencias" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

@@ -7,15 +7,17 @@ public class JuegoEnUnaMatriz {
     public static void main(String[] args) {
         String[][] mapa = new String[10][10];
         Object[] jugadorData = new Object[3];
-        inicializarJuego(mapa, jugadorData);
+        Object[][] enemigosData = new Object[4][4];
+        inicializarJuego(mapa, jugadorData, enemigosData);
         mostrarMapa(mapa);
     }
 
-    public static void inicializarJuego(String[][] mapa, Object[] jugadorData){
+    public static void inicializarJuego(String[][] mapa, Object[] jugadorData, Object[][] enemigosData){
         generarLimitesMapa(mapa);
         ponerJugadorYFin(mapa);
         ponerObstaculos(mapa);
         ponerCofres(mapa);
+        ponerEnemigos(mapa, enemigosData);
         int[] posicionJugador = new int[2];
         posicionJugador[0] = 1;
         posicionJugador[1] = 1;
@@ -188,6 +190,36 @@ public class JuegoEnUnaMatriz {
             }
         }
         return mapa;
+    }
+
+    public static String[][] ponerEnemigos(String[][] mapa, Object[][] enemigosData){
+        int contadorEnemigos = 1;
+        for (int i = 1; i < mapa.length - 1; i++){
+            for (int j = 1; j < mapa[i].length - 1; j++){
+                if (mapa[i][j] == " . " &&  contadorEnemigos <= 4 &&numeroAleatorio(1,10) == 5){
+                    mapa[i][j] = " E ";
+                    contadorEnemigos++;
+                    int[] posicionEnemigo = new int[2];
+                    posicionEnemigo[0] = i;
+                    posicionEnemigo[1] = j;
+                    agregarEnemigos(enemigosData, posicionEnemigo, 45, 10);
+                }
+            }
+        }
+        return mapa;
+    }
+
+    public static Object[][] agregarEnemigos(Object[][] enemigosData, int[] posicion, int salud, int ataque){
+        for (int i = 0; i < enemigosData.length; i++){
+            if (enemigosData[i][0] == null){
+                String nombreEnemigo = "Enemigo"+i;
+                enemigosData[i][0] = nombreEnemigo;
+                enemigosData[i][1] = posicion;
+                enemigosData[i][2] = salud;
+                enemigosData[i][3] = ataque;
+            }
+        }
+        return enemigosData;
     }
 
     public static String[][] generarLimitesMapa(String[][] mapa) {
