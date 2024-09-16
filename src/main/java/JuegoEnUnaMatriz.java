@@ -55,6 +55,37 @@ public class JuegoEnUnaMatriz {
         }
     }
 
+    public static String eventoCofre(Object[] jugadorData){
+        if (boleanoAleatorio()){//Recompensa
+            if (boleanoAleatorio()){ //Daño +
+                int danoActual = (int)jugadorData[2];
+                jugadorData[2] = danoActual + numeroAleatorio(10, 20);
+                return "Daño aumentado:" + (int)jugadorData[2];
+            } else { //Salud +
+                int saludActual = (int)jugadorData[1];
+                jugadorData[1] = saludActual + numeroAleatorio(10, 20);
+                return "Salud aumentada:" + (int)jugadorData[1];
+            }
+        } else {
+            if (boleanoAleatorio()){
+                int danoActual = (int)jugadorData[2];
+                jugadorData[2] = danoActual - numeroAleatorio(10, 20);
+                if ((int)jugadorData[2] < 15){
+                    jugadorData[2] = 10;
+                    return "Daño disminuido:" + (int)jugadorData[2];
+                }
+                return "Daño disminuido:" + (int)jugadorData[2];
+            } else {
+                int saludActual = (int)jugadorData[1];
+                jugadorData[1] = saludActual - numeroAleatorio(10, 20);
+                if (saludActual <= 0){
+                    return "Fin del juego";
+                }
+                return "Salud disminuido:" + (int)jugadorData[1];
+            }
+        }
+    }
+
     public static String verificarEventoDelMapa(String[][] mapa, int[] posicionJugador, String letraDireccion){
         //                 w - Arriba
         // a - Izquierda | s - Abajo  | d - Derecha
