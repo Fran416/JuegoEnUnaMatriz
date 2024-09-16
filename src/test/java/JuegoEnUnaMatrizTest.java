@@ -1,9 +1,15 @@
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class JuegoEnUnaMatrizTest {
     String[][] mapaVacio= new String[10][10];
+
+    @BeforeEach
+    void setUp() {
+        JuegoEnUnaMatriz.generarLimitesMapa(mapaVacio);
+    }
 
     @Test
     void generarLimitesMapa() {
