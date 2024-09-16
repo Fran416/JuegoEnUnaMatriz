@@ -4,7 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c5f3c849-87cb-4dc5-be21-e744278fc129" name="Changes" comment="Funcion al interactuar con un cofre creada">
+    <list default="true" id="c5f3c849-87cb-4dc5-be21-e744278fc129" name="Changes" comment="Implementado sistema de combate">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/JuegoEnUnaMatriz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/JuegoEnUnaMatriz.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -92,7 +93,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1726507207940</updated>
-      <workItem from="1726507209126" duration="10197000" />
+      <workItem from="1726507209126" duration="16908000" />
     </task>
     <task id="LOCAL-00001" summary="Initial Commit">
       <option name="closed" value="true" />
@@ -174,7 +175,23 @@
       <option name="project" value="LOCAL" />
       <updated>1726517182512</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Agregado el evento cofre (y sus resultados) al metodo jugar">
+      <option name="closed" value="true" />
+      <created>1726518210456</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1726518210456</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Implementado sistema de combate">
+      <option name="closed" value="true" />
+      <created>1726523382099</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1726523382099</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,7 +206,9 @@
     <MESSAGE value="Evidencias" />
     <MESSAGE value="Funcion para agregar enemigos y sus estadisticas base agregadas" />
     <MESSAGE value="Funcion al interactuar con un cofre creada" />
-    <option name="LAST_COMMIT_MESSAGE" value="Funcion al interactuar con un cofre creada" />
+    <MESSAGE value="Agregado el evento cofre (y sus resultados) al metodo jugar" />
+    <MESSAGE value="Implementado sistema de combate" />
+    <option name="LAST_COMMIT_MESSAGE" value="Implementado sistema de combate" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

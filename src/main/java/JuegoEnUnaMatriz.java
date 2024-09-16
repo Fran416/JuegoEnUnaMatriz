@@ -10,6 +10,8 @@ public class JuegoEnUnaMatriz {
         Object[] jugadorData = new Object[3];
         Object[][] enemigosData = new Object[4][4];
         inicializarJuego(mapa, jugadorData, enemigosData);
+
+        jugar(mapa,enemigosData,jugadorData);
         mostrarMapa(mapa);
     }
     public static int seleccionUsuario(){
@@ -37,11 +39,13 @@ public class JuegoEnUnaMatriz {
         jugadorData[2] = ataqueInicial;
     }
 
-    public static void jugar (String[][] mapa, Object[] jugadorData){
+    public static void jugar (String[][] mapa,Object[][] enemigosData, Object[] jugadorData){
         boolean vivo = true;
         int[] posicionJugador = (int[])jugadorData[0];
         int saludActual = (int) jugadorData[1];
         int ataqueActual = (int) jugadorData[2];
+        Object[] enemigo;
+        String resultadoEvento = "";
         while (vivo){
             actualizarJugadorData(jugadorData, posicionJugador, saludActual, ataqueActual);
             mostrarMapa(mapa);
@@ -54,9 +58,16 @@ public class JuegoEnUnaMatriz {
                 moverJugador(mapa, posicionJugador, letra);
             } else if (evento == "enemigo") {
                 moverJugador(mapa, posicionJugador, letra);
-                //Funcion para entrar en combate con el enemigo en cuestion
+                enemigo = identificarEnemigo(mapa,enemigosData, jugadorData);
+                assert enemigo != null;
+                resultadoEvento = entrarEnCombate(mapa, enemigo, jugadorData);
+                if (resultadoEvento == "muerte"){
+                    vivo = false;
+                } else {
+                    System.out.println("Felicidades eres formidable, sigue asi!");
+                }
             } else if (evento == "cofre") {
-                String resultadoEvento = eventoCofre(jugadorData);
+                resultadoEvento = eventoCofre(jugadorData);
                 if (resultadoEvento == "muerte"){
                     System.out.println("El cofre a resultado ser una trampa mortal y te quito tus ultimos puntos de vida...");
                     vivo = false;
@@ -72,14 +83,14 @@ public class JuegoEnUnaMatriz {
         }
     }
 
-    public static void mostrarPantallaCombate(String nombreEnemigo){
-        System.out.println("                                      "+nombreEnemigo);
-        System.out.println("Tu:");
+    public static void mostrarPantallaCombate(String nombreEnemigo, int saludJugador, int saludEnemigo){
+        System.out.println("                                      "+nombreEnemigo + " | Salud: "+ saludEnemigo);
+        System.out.println("Tu | Salud: "+saludJugador);
         System.out.println(" 1) Atacar");
         System.out.println(" 2) Huir");
     }
 
-    public static String entrarEnCombate(Object[] enemigo, Object[] jugadorData){
+    public static String entrarEnCombate(String[][] mapa,Object[] enemigo, Object[] jugadorData){
         boolean enCombate = true;
         String nombreEnemigo = (String)enemigo[0];
         int ataqueEnemigo = (int)enemigo[1];
@@ -88,7 +99,7 @@ public class JuegoEnUnaMatriz {
         int ataqueJugador = (int)jugadorData[2];
         String resultadoAccionMenu = "";
         while (enCombate){
-            mostrarPantallaCombate(nombreEnemigo);
+            mostrarPantallaCombate(nombreEnemigo, saludJugador, saludEnemigo);
             resultadoAccionMenu = accionesMenuCombate();
             if (resultadoAccionMenu == "restarVidaEnemigo"){
                 saludEnemigo -= ataqueJugador;
@@ -99,6 +110,7 @@ public class JuegoEnUnaMatriz {
             } else if (resultadoAccionMenu == "opcionInvalida") {
                 System.out.println("La opcion seleccionada no existe");
             }
+            actualizarJugadorData(jugadorData, coordenadasActualesJugador(mapa), saludJugador, ataqueJugador);
 
             if (saludEnemigo<=0){
                 System.out.println("El enemigo se a quedado sin puntos de vida!");
@@ -160,16 +172,17 @@ public class JuegoEnUnaMatriz {
     }
 
     public static Object[] identificarEnemigo(String[][] mapa,Object[][] enemigosData, Object[] jugadorData){
-        int[] coordenadasEnemigo = coordenadasActualesJugador(mapa);
-        for (int i=0; i<=enemigosData.length; i++){
-            if (coordenadasEnemigo == enemigosData[i][1]){
+        int[] coordenadasEnemigo;
+        coordenadasEnemigo = coordenadasActualesJugador(mapa);
+        for (int i=0; i<enemigosData.length; i++){
+            if (coordenadasEnemigo[0] == ((int[])enemigosData[i][1])[0] && coordenadasEnemigo[1] == ((int[])enemigosData[i][1])[1]){
                 String nombreEnemigo = (String) enemigosData[i][0];
-                int ataqueEnemigo = (int) enemigosData[i][2];
-                int saludEnemigo = (int) enemigosData[i][3];
+                int ataqueEnemigo = (int) enemigosData[i][3];
+                int saludEnemigo = (int) enemigosData[i][2];
                 return new Object[]{nombreEnemigo, ataqueEnemigo, saludEnemigo};
             }
         }
-        return null;
+        return new Object[]{"Enemigo", 10, 45};
     }
 
     public static String eventoCofre(Object[] jugadorData){
