@@ -9,11 +9,42 @@ public class JuegoEnUnaMatriz {
         String[][] mapa = new String[10][10];
         Object[] jugadorData = new Object[3];
         Object[][] enemigosData = new Object[4][4];
-        inicializarJuego(mapa, jugadorData, enemigosData);
+        menu(mapa, jugadorData, enemigosData);
+        System.out.println("Hasta pronto guerrero!");
 
-        jugar(mapa,enemigosData,jugadorData);
-        mostrarMapa(mapa);
     }
+
+    public static void menu(String[][] mapa, Object[] jugadorData, Object[][] enemigosData) {
+        boolean continuar = true;
+        while (continuar) {
+            mostrarMenu();
+            continuar = accionesMenu(mapa, jugadorData, enemigosData);
+        }
+    }
+
+    public static boolean accionesMenu(String[][] mapa, Object[] jugadorData, Object[][] enemigosData) {
+        switch (seleccionUsuario()) {
+            case 1:
+                inicializarJuego(mapa, jugadorData, enemigosData );
+                jugar(mapa, enemigosData, jugadorData);
+                return true;
+            case 2:
+                return false;
+            default:
+                return true;
+        }
+    }
+
+    public static void mostrarMenu(){
+        System.out.println("╔════════════════╗\n" +
+                           " JuegoEnUnaMatriz \n" +
+                           "╚════════════════╝");
+        System.out.println("1) Ir a la aventura! ");
+        System.out.println("2) Retirarse por ahora... ");
+        System.out.print("Su seleccion: ");
+    }
+
+
     public static int seleccionUsuario(){
         try{
             int seleccion = obtenerEntero();
@@ -39,7 +70,7 @@ public class JuegoEnUnaMatriz {
         jugadorData[2] = ataqueInicial;
     }
 
-    public static void jugar (String[][] mapa,Object[][] enemigosData, Object[] jugadorData){
+    public static String jugar (String[][] mapa,Object[][] enemigosData, Object[] jugadorData){
         boolean vivo = true;
         int[] posicionJugador = (int[])jugadorData[0];
         int saludActual = (int) jugadorData[1];
@@ -49,6 +80,7 @@ public class JuegoEnUnaMatriz {
         while (vivo){
             actualizarJugadorData(jugadorData, posicionJugador, saludActual, ataqueActual);
             mostrarMapa(mapa);
+            System.out.println("Salud: "+saludActual+" | Ataque: "+ataqueActual);
             System.out.print("Su direccion: ");
             String letra = obtenerLetra();
             String evento = verificarEventoDelMapa(mapa, posicionJugador, letra);
@@ -77,10 +109,13 @@ public class JuegoEnUnaMatriz {
                 ataqueActual = (int)jugadorData[2];
                 moverJugador(mapa, posicionJugador, letra);
                 }
+            } else if (evento == "final") {
+                System.out.println("Felicidades");
+                return "victoria";
             }
             posicionJugador = coordenadasActualesJugador(mapa);
-
         }
+        return "muerte";
     }
 
     public static void mostrarPantallaCombate(String nombreEnemigo, int saludJugador, int saludEnemigo){
@@ -229,6 +264,8 @@ public class JuegoEnUnaMatriz {
                 return "cofre";
             } else if (mapa[fila-1][columna] == " E ") {
                 return "enemigo";
+            } else if (mapa[fila-1][columna] == " X "){
+                return "final";
             } else {
                 return "mover";
             }
@@ -239,7 +276,9 @@ public class JuegoEnUnaMatriz {
                 return "cofre";
             } else if (mapa[fila+1][columna] == " E ") {
                 return "enemigo";
-            } else {
+            }else if (mapa[fila+1][columna] == " X "){
+                return "final";
+            }else {
                 return "mover";
             }
         } else if (Objects.equals(letraDireccion, "d")){
@@ -249,6 +288,8 @@ public class JuegoEnUnaMatriz {
                 return "cofre";
             } else if (mapa[fila][columna+1] == " E ") {
                 return "enemigo";
+            } else if (mapa[fila][columna+1] == " X "){
+                return "final";
             } else {
                 return "mover";
             }
@@ -259,6 +300,8 @@ public class JuegoEnUnaMatriz {
                 return "cofre";
             } else if (mapa[fila][columna-1] == " E ") {
                 return "enemigo";
+            } else if (mapa[fila][columna-1] == " X "){
+                return "final";
             } else {
                 return "mover";
             }
