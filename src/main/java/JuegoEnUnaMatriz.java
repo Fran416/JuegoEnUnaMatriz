@@ -47,8 +47,16 @@ public class JuegoEnUnaMatriz {
                 //Funcion para entrar en combate con el enemigo en cuestion
                 moverJugador(mapa, posicionJugador, letra);
             } else if (evento == "cofre") {
-                //Funcion para entrar en el evento de cofre
+                String resultadoEvento = eventoCofre(jugadorData);
+                if (resultadoEvento == "muerte"){
+                    System.out.println("El cofre a resultado ser una trampa mortal y te quito tus ultimos puntos de vida...");
+                    vivo = false;
+                } else {
+                System.out.println(resultadoEvento);
+                saludActual = (int)jugadorData[1];
+                ataqueActual = (int)jugadorData[2];
                 moverJugador(mapa, posicionJugador, letra);
+                }
             }
             posicionJugador = coordenadasActualesJugador(mapa);
 
@@ -79,7 +87,7 @@ public class JuegoEnUnaMatriz {
                 int saludActual = (int)jugadorData[1];
                 jugadorData[1] = saludActual - numeroAleatorio(10, 20);
                 if (saludActual <= 0){
-                    return "Fin del juego";
+                    return "muerte";
                 }
                 return "Salud disminuido:" + (int)jugadorData[1];
             }
